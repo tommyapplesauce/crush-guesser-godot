@@ -29,14 +29,16 @@ jobs:
           persist-credentials: false
       - name: Configure Pages
         uses: actions/configure-pages@v5
-      - name: Verify and restore last working browser build
+      - name: Verify and unpack repaired standalone browser build
         run: |
-          echo '668afb9b7b68a52d7d1e7af7eca4261cd1e9104f993e2a8fcf940753eea34af8  Crush_Guesser_95_Web_Test_Build.zip' | sha256sum --check --strict
+          cat Crush_Guesser_95_Tactile_Web.zip.part01 Crush_Guesser_95_Tactile_Web.zip.part02 Crush_Guesser_95_Tactile_Web.zip.part03 > web.zip
+          echo '46ed508688dace0ea371df1af2da3154d1d1fb2bac6269dc1604cb8db2f3659c  web.zip' | sha256sum --check --strict
           mkdir -p _site
-          unzip -q Crush_Guesser_95_Web_Test_Build.zip -d _site
+          unzip -q web.zip -d _site
           test -s _site/index.html
-          test -s _site/index.wasm
-          test -s _site/index.pck
+          test -s _site/crush-tactile-suno-fix1-20261013.wasm
+          test -s _site/crush-tactile-suno-fix1-20261013.pck
+          grep -qx 'crush-tactile-suno-fix1-20261013' _site/build-version.txt
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4
         with:
