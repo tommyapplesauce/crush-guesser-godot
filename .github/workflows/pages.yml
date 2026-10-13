@@ -29,13 +29,16 @@ jobs:
           persist-credentials: false
       - name: Configure Pages
         uses: actions/configure-pages@v5
-      - name: Unpack tested browser build
+      - name: Verify and unpack tested browser build
         run: |
+          cat Crush_Guesser_95_Tactile_Web.zip.part01 Crush_Guesser_95_Tactile_Web.zip.part02 > web.zip
+          echo '7e764b2e22045fe0bafac3f71a294674b4e3a9a710e5964061616c02adc05284  web.zip' | sha256sum --check --strict
           mkdir -p _site
-          unzip -q Crush_Guesser_95_Web_Test_Build.zip -d _site
+          unzip -q web.zip -d _site
           test -s _site/index.html
-          test -s _site/index.wasm
-          test -s _site/index.pck
+          test -s _site/crush-tactile-suno-20261013.wasm
+          test -s _site/crush-tactile-suno-20261013.pck
+          grep -qx 'crush-tactile-suno-20261013' _site/build-version.txt
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4
         with:
