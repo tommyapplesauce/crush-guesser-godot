@@ -31,14 +31,14 @@ jobs:
         uses: actions/configure-pages@v5
       - name: Verify and unpack repaired standalone browser build
         run: |
-          cat Crush_Guesser_95_Tactile_Web.zip.part01 Crush_Guesser_95_Tactile_Web.zip.part02 Crush_Guesser_95_Tactile_Web.zip.part03 > web.zip
-          echo '46ed508688dace0ea371df1af2da3154d1d1fb2bac6269dc1604cb8db2f3659c  web.zip' | sha256sum --check --strict
+          cat crush-mockup-fidelity-20261013-r1.zip.part01 crush-mockup-fidelity-20261013-r1.zip.part02 crush-mockup-fidelity-20261013-r1.zip.part03 > web.zip
+          echo 'f38a60a7b9fdbf0990ecdba4e3f97eae2629dcff6ff0a373b30a66230c7e329e  web.zip' | sha256sum --check --strict
           mkdir -p _site
           unzip -q web.zip -d _site
           test -s _site/index.html
-          test -s _site/crush-tactile-suno-fix1-20261013.wasm
-          test -s _site/crush-tactile-suno-fix1-20261013.pck
-          grep -qx 'crush-tactile-suno-fix1-20261013' _site/build-version.txt
+          test -s _site/crush-mockup-fidelity-20261013-r1.wasm
+          test -s _site/crush-mockup-fidelity-20261013-r1.pck
+          grep -qx 'crush-mockup-fidelity-20261013-r1' _site/build-version.txt
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4
         with:
